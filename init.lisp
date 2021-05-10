@@ -19,6 +19,8 @@ Make sure you understand the security risks associated with this
 before running this command."
   (slynk:create-server :port slynk-port :dont-close t))
 
+(setf *mouse-focus-policy* :sloppy)
+
 (start-slynk)
 
 (mode-line)
