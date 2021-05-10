@@ -38,7 +38,12 @@ like a string, otherwise just leave it be"
 ;;; Key bindings
 ;; ---------------------------------------------------------------
 
-(set-prefix-key (kbd "s-x"))
+(defparameter *modifier* "s")
+
+(defun modifier (string)
+  (concatenate 'string *modifier* "-" string))
+
+(set-prefix-key (kbd (modifier "x")))
 
 (defun-key *root-map* (kbd "z") stumpwm::*exchange-window-map*)
 
@@ -54,42 +59,43 @@ like a string, otherwise just leave it be"
 
 ;; Window selection
 ;; Not sure I want these as they are on the root map easily
-;; (defun-key *top-map* (kbd "s-`") (select-window-by-number 0))
-;; (defun-key *top-map* (kbd "s-1") (select-window-by-number 1))
-;; (defun-key *top-map* (kbd "s-2") (select-window-by-number 2))
-;; (defun-key *top-map* (kbd "s-3") (select-window-by-number 3))
-;; (defun-key *top-map* (kbd "s-4") (select-window-by-number 4))
-(defun-key *top-map* (kbd "s-5") (select-window-by-number 5))
+;; (defun-key *top-map* (kbd ( modifier"`")) (select-window-by-number 0))
+;; (defun-key *top-map* (kbd ( modifier"1")) (select-window-by-number 1))
+;; (defun-key *top-map* (kbd ( modifier"2")) (select-window-by-number 2))
+;; (defun-key *top-map* (kbd ( modifier"3")) (select-window-by-number 3))
+;; (defun-key *top-map* (kbd ( modifier"4")) (select-window-by-number 4))
+;; (defun-key *top-map* (kbd ( modifier"5")) (select-window-by-number 5))
 
-(defun-key *top-map* (kbd "s-`") (frame-switch-by-number 0))
-(defun-key *top-map* (kbd "s-1") (frame-switch-by-number 1))
-(defun-key *top-map* (kbd "s-2") (frame-switch-by-number 2))
-(defun-key *top-map* (kbd "s-3") (frame-switch-by-number 3))
-(defun-key *top-map* (kbd "s-4") (frame-switch-by-number 4))
-(defun-key *top-map* (kbd "s-5") (frame-switch-by-number 5))
+(defun-key *top-map* (kbd (modifier "`")) (frame-switch-by-number 0))
+(defun-key *top-map* (kbd (modifier "1")) (frame-switch-by-number 1))
+(defun-key *top-map* (kbd (modifier "2")) (frame-switch-by-number 2))
+(defun-key *top-map* (kbd (modifier "3")) (frame-switch-by-number 3))
+(defun-key *top-map* (kbd (modifier "4")) (frame-switch-by-number 4))
+(defun-key *top-map* (kbd (modifier "5")) (frame-switch-by-number 5))
+(defun-key *top-map* (kbd (modifier "6")) (frame-switch-by-number 6))
 
 
-(defun-key *top-map* (kbd "s-F1") (gselect 1))
-(defun-key *top-map* (kbd "s-F2") (gselect 2))
-(defun-key *top-map* (kbd "s-F3") (gselect 3))
-(defun-key *top-map* (kbd "s-F4") (gselect 4))
-(defun-key *top-map* (kbd "s-F5") (gselect 5))
+(defun-key *top-map* (kbd (modifier "F1")) (gselect 1))
+(defun-key *top-map* (kbd (modifier "F2")) (gselect 2))
+(defun-key *top-map* (kbd (modifier "F3")) (gselect 3))
+(defun-key *top-map* (kbd (modifier "F4")) (gselect 4))
+(defun-key *top-map* (kbd (modifier "F5")) (gselect 5))
 
-(defun-key *top-map* (kbd "s-f") (fullscreen))
+(defun-key *top-map* (kbd (modifier "f")) (fullscreen))
 
 ;; ---------------------------------------------------------------
 ;; vim movement Selectors
 ;; ---------------------------------------------------------------
 
-(defun-key *top-map* (kbd "s-h") (move-focus :left))
-(defun-key *top-map* (kbd "s-j") (move-focus :down))
-(defun-key *top-map* (kbd "s-k") (move-focus :up))
-(defun-key *top-map* (kbd "s-l") (move-focus :right))
+(defun-key *top-map* (kbd (modifier "h")) (move-focus :left))
+(defun-key *top-map* (kbd (modifier "j")) (move-focus :down))
+(defun-key *top-map* (kbd (modifier "k")) (move-focus :up))
+(defun-key *top-map* (kbd (modifier "l")) (move-focus :right))
 
-(defun-key *top-map* (kbd "C-s-h") (move-window :left))
-(defun-key *top-map* (kbd "C-s-j") (move-window :down))
-(defun-key *top-map* (kbd "C-s-k") (move-window :up))
-(defun-key *top-map* (kbd "C-s-l") (move-window :right))
+(defun-key *top-map* (kbd (modifier "C-h")) (move-window :left))
+(defun-key *top-map* (kbd (modifier "C-j")) (move-window :down))
+(defun-key *top-map* (kbd (modifier "C-k")) (move-window :up))
+(defun-key *top-map* (kbd (modifier "C-l")) (move-window :right))
 
 ;; ---------------------------------------------------------------
 ;; Other
@@ -116,5 +122,5 @@ like a string, otherwise just leave it be"
 (defun-key *root-map* (kbd "C-S-q") (quit-confirm))
 
 ;; Calling menus
-(defun-key *top-map* (kbd "s-d") (exec))
-(defun-key *top-map* (kbd "s-n") (exec "passmenu"))
+(defun-key *top-map* (kbd (modifier "d")) (exec))
+(defun-key *top-map* (kbd (modifier "n")) (exec "passmenu"))
