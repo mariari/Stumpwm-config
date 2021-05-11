@@ -19,7 +19,33 @@ like a string, otherwise just leave it be"
       command))
 
 (defmacro defun-key (map key command)
+  "Add a keybinding mapping for the key, @var{key}, to the command,
+@var{command}, in the specified keymap. If @var{command} is nil, remove an
+existing binding.  Unlike define-key, defnu-key takes a lisp expression"
   `(define-key ,map ,key (format-command ',command)))
+
+(defmacro defun-key-range (map key-fun command)
+  "Acts like defun-key over the keyboard range of 0-9. the key-fun is
+a function which takes the number, while command automatically gets
+fed the argument."
+  `(progn
+     ,@(mapcar (lambda (number)
+                 ;; ugly expansion
+                 `(defun-key ,map (funcall ,key-fun ,number)
+                    ;; have to simulate function application,
+                    ;; it's awkward due to the interface stump takes
+                    ,(if (listp command)
+                         `(,@command ,number)
+                         `(,command ,number))))
+               (list:range 1 9))))
+
+
+(defun kbd-modifier-prefix (prefix)
+  "sets up a kbd binding. Namely this binding includes the modifier
+prefix along with concatenating the prefix to the curried number left
+to send in."
+  (lambda (num)
+    (kbd (modifier (format nil "~a~a" prefix num)))))
 
 ;; ---------------------------------------------------------------
 ;;; Special commands
@@ -59,27 +85,16 @@ like a string, otherwise just leave it be"
 
 ;; Window selection
 ;; Not sure I want these as they are on the root map easily
-;; (defun-key *top-map* (kbd ( modifier"`")) (select-window-by-number 0))
-;; (defun-key *top-map* (kbd ( modifier"1")) (select-window-by-number 1))
-;; (defun-key *top-map* (kbd ( modifier"2")) (select-window-by-number 2))
-;; (defun-key *top-map* (kbd ( modifier"3")) (select-window-by-number 3))
-;; (defun-key *top-map* (kbd ( modifier"4")) (select-window-by-number 4))
-;; (defun-key *top-map* (kbd ( modifier"5")) (select-window-by-number 5))
+;; (defun-key-range *top-map* (kbd-modifier-prefix "") select-window-by-number)
 
-(defun-key *top-map* (kbd (modifier "`")) (frame-switch-by-number 0))
-(defun-key *top-map* (kbd (modifier "1")) (frame-switch-by-number 1))
-(defun-key *top-map* (kbd (modifier "2")) (frame-switch-by-number 2))
-(defun-key *top-map* (kbd (modifier "3")) (frame-switch-by-number 3))
-(defun-key *top-map* (kbd (modifier "4")) (frame-switch-by-number 4))
-(defun-key *top-map* (kbd (modifier "5")) (frame-switch-by-number 5))
-(defun-key *top-map* (kbd (modifier "6")) (frame-switch-by-number 6))
+(defun-key *top-map* (kbd (modifier "`"))
+  (frame-switch-by-number 0))
 
+(defun-key-range *top-map* (kbd-modifier-prefix "")
+  frame-switch-by-number)
 
-(defun-key *top-map* (kbd (modifier "F1")) (gselect 1))
-(defun-key *top-map* (kbd (modifier "F2")) (gselect 2))
-(defun-key *top-map* (kbd (modifier "F3")) (gselect 3))
-(defun-key *top-map* (kbd (modifier "F4")) (gselect 4))
-(defun-key *top-map* (kbd (modifier "F5")) (gselect 5))
+(defun-key-range *top-map* (kbd-modifier-prefix "F")
+  gselect)
 
 (defun-key *top-map* (kbd (modifier "f")) (fullscreen))
 
@@ -108,10 +123,12 @@ like a string, otherwise just leave it be"
 ;; Pulling
 (defun-key *root-map* (kbd "p") (pull-hidden-previous))
 
-;; Windows Listing
+;; Listing functions
 (defun-key *root-map* (kbd "W") (windowlist))
 (defun-key *root-map* (kbd "E") (frame-windowlist))
 (defun-key *root-map* (kbd "e") (frame-windows))
+
+(defun-key *top-map* (kbd (modifier "ESC")) (grouplist))
 
 ;; Placing
 (defun-key *root-map* (kbd "C-p") (place-existing-windows))

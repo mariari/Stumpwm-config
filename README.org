@@ -1,0 +1,25 @@
+* Stump config
+
+This is my stumpwm config. At the moment it is quite immature
+* Dependencies
+There isn't many extra dependencies aside from =stumpwm= and
+=stumpwm-contribute=. However I do use my standard library in places
+
+- _By hand_
+
+  + Grab the library from https://github.com/mariari/Misc-Lisp-Scripts
+  + Run in your your auto loaded file (=.sbclrc=) or =init.lisp=
+    #+begin_src lisp
+      (load "path to asd")
+      (ql:quickload :misc)
+      ;; After the first time, this can be replaced with
+      (asdf:load-system :misc)
+    #+end_src
+
+- _Via ros_
+  + =ros install mariari/Misc-Lisp-Scripts=
+  + Should just work, however you may need to run
+    =(ql:quickload :misc)= once.
+
+The ros method requires having your stumpwm work via roswell, which
+isn't standard
