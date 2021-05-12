@@ -80,6 +80,13 @@ to send in."
 (defun-key *root-map* (kbd "C-w") (repack-window-numbers))
 
 ;; ---------------------------------------------------------------
+;; Group numbering
+;; ---------------------------------------------------------------
+
+(defun-key *groups-map* (kbd "a") (stump-config.groups:grenumber))
+(defun-key *groups-map* (kbd "z") (stump-config.groups:grenumber-other))
+
+;; ---------------------------------------------------------------
 ;; Number selectors
 ;; ---------------------------------------------------------------
 
