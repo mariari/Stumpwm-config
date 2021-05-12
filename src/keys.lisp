@@ -136,7 +136,7 @@ to send in."
 ;; killing
 (defun-key *root-map* (kbd "q") (delete))
 (defun-key *root-map* (kbd "S-q") (kill))
-(defun-key *root-map* (kbd "C-S-q") (quit-confirm))
+(defun-key *root-map* (kbd "C-M-q") (quit-confirm))
 
 ;; Calling menus
 (defun-key *top-map* (kbd (modifier "d")) (exec))

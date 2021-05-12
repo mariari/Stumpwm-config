@@ -7,7 +7,7 @@
 (ql:quickload :slynk)
 
 (load "~/.stumpwm.d/stump-config.asd")
-(asdf:load-system :stump-config)
+(asdf:load-system :stump-config/startup)
 
 (defun start-slynk (&optional (slynk-port 4005))
   "Start a Slynk server that can be connected to, for instance, in
@@ -19,7 +19,10 @@ Make sure you understand the security risks associated with this
 before running this command."
   (slynk:create-server :port slynk-port :dont-close t))
 
-(setf *mouse-focus-policy* :sloppy)
+;; sloppy is annoying, with group changing
+;; (setf *mouse-focus-policy* :sloppy)
+
+(setf *mouse-focus-policy* :click)
 
 (start-slynk)
 
@@ -27,10 +30,7 @@ before running this command."
 
 ;; prompt the user for an interactive command. The first arg is an
 ;; optional initial contents.
-(defcommand colon1 (&optional (initial "")) (:rest)
-  (let ((cmd (read-one-line (current-screen) ": " :initial-input initial)))
-    (when cmd
-      (eval-command cmd t))))
+
 
 ;; Read some doc
 (define-key *root-map* (kbd "d") "exec gv")

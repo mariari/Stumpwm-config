@@ -9,4 +9,12 @@
   :maintainer "mariari"
   :author "mariari"
   :description "Stumpwm configuration"
-  :components ((:file "./src/keys")))
+  :components ((:file "src/keys")))
+
+(asdf:defsystem stump-config/startup
+  :depends-on (:stumpwm :misc :stump-config)
+  :version "0.0.0.1"
+  :maintainer "mariari"
+  :author "mariari"
+  :description "Stumpwm configuration startup"
+  :components ((:file "src/startup")))
