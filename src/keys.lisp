@@ -137,6 +137,35 @@ to send in."
 
 (defun-key *top-map* (kbd (modifier "ESC")) (grouplist))
 
+;; ---------------------------------
+;; Volume
+;; ---------------------------------
+
+(defun-key *top-map* (kbd "XF86MonBrightnessUp")
+  (exec "xbacklight -steps 1 -time 0 -inc 5"))
+
+(defun-key *top-map* (kbd "XF86MonBrightnessDown")
+  (exec "xbacklight -steps 1 -time 0 -dec 5"))
+
+(defun-key *top-map* (kbd "XF86AudioMute")
+  (exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"))
+
+(defun-key *top-map* (kbd "XF86AudioLowerVolume")
+  (exec "pactl set-sink-volume @DEFAULT_SINK@ '-5%'"))
+
+(defun-key *top-map* (kbd "XF86AudioRaiseVolume")
+  (exec "pactl set-sink-volume @DEFAULT_SINK@ '+5%'"))
+
+;; ---------------------------------
+;; Uploading
+;; ---------------------------------
+
+(defun-key *root-map* (kbd "u")
+  (exec "~/scripts/maim/current.sh"))
+
+(defun-key *root-map* (kbd "U")
+  (exec "~/scripts/maim/section.sh"))
+
 ;; Placing
 (defun-key *root-map* (kbd "C-p") (place-existing-windows))
 
