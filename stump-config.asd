@@ -9,8 +9,8 @@
   :maintainer "mariari"
   :author "mariari"
   :description "Stumpwm configuration"
-  :components ((:file "src/groups")
-               (:file "src/keys" :depends-on ("src/group"))))
+  :components ((:file "./src/group")
+               (:file "./src/keys" :depends-on ("./src/group"))))
 
 (asdf:defsystem stump-config/startup
   :depends-on (:stumpwm :misc :stump-config)

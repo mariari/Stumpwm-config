@@ -97,6 +97,9 @@ to send in."
 (defun-key *top-map* (kbd (modifier "`"))
   (frame-switch-by-number 0))
 
+(defun-key *top-map* (kbd (modifier "="))
+  (frame-switch-by-number 0))
+
 (defun-key-range *top-map* (kbd-modifier-prefix "")
   frame-switch-by-number)
 
