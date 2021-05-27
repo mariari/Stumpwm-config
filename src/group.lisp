@@ -27,20 +27,22 @@
 (defcommand grenumber (number) ((:number "number-to-set: "))
   "renumbers the current group to the one selected by the user. If a
 group exists which overlaps, then the numbering shall be swapped"
-  (let ((target-group (find-group-from-number (stumpwm:current-screen) number))
-        (group        (current-group)))
-    (if target-group
-        (swap-group-numbers target-group group)
-        (set-group-number group number))))
+  (when number
+    (let ((target-group (find-group-from-number (stumpwm:current-screen) number))
+          (group        (current-group)))
+      (if target-group
+          (swap-group-numbers target-group group)
+          (set-group-number group number)))))
 
 (defcommand grenumber-other (to-start to-swap-to) ((:number "number-from: ")
                                                    (:number "number-to-set: "))
   "renumbers the current group to the one selected by the user. If a
 group exists which overlaps, then the numbering shall be swapped"
-  (let* ((screen       (stumpwm:current-screen))
-         (start-group  (find-group-from-number screen to-start))
-         (target-group (find-group-from-number screen to-swap-to)))
-    (cond ((and start-group target-group)
-           (swap-group-numbers start-group target-group))
-          (to-start
-           (set-group-number start-group to-swap-to)))))
+  (when (and to-start to-swap-to)
+    (let* ((screen       (stumpwm:current-screen))
+           (start-group  (find-group-from-number screen to-start))
+           (target-group (find-group-from-number screen to-swap-to)))
+      (cond ((and start-group target-group)
+             (swap-group-numbers start-group target-group))
+            (to-start
+             (set-group-number start-group to-swap-to))))))
