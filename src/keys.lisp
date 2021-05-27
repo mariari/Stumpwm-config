@@ -54,7 +54,7 @@ to send in."
 (defcommand repack-frame-numbers () ()
   (stumpwm::group-repack-frame-numbers (current-group)))
 
-(defcommand frame-switch-by-number (number) ((:window-number "Select: "))
+(defcommand frame-switch-by-number (number) ((:number "Select: "))
   "switches frame by number"
   (let ((frame (stumpwm::frame-by-number (current-group) number)))
     (when frame
