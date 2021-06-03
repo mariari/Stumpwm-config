@@ -15,7 +15,7 @@
   "we need to format the command, if it's an application format it
 like a string, otherwise just leave it be"
   (if (listp command)
-      (format nil "~{~a~^ ~}" command)
+      (format nil "~(~a~)~{ ~a~}" (car command) (cdr command))
       command))
 
 (defmacro defun-key (map key command)
@@ -27,8 +27,8 @@ existing binding.  Unlike define-key, defnu-key takes a lisp expression"
       ,(if (listp command)
            ;; if this is the case we want the car to be frozen, but we
            ;; want the arguments to be evaled
-           `(list (quote ,(car command)) ,@(cdr command))
-           `,command))))
+           `(list ',(car command) ,@(cdr command))
+           `',command))))
 
 (defmacro defun-key-range (map key-fun command &optional (range '(list:range 1 9)))
   "Acts like defun-key over the keyboard range of 0-9. the key-fun is
