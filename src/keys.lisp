@@ -22,22 +22,29 @@ like a string, otherwise just leave it be"
   "Add a keybinding mapping for the key, @var{key}, to the command,
 @var{command}, in the specified keymap. If @var{command} is nil, remove an
 existing binding.  Unlike define-key, defnu-key takes a lisp expression"
-  `(define-key ,map ,key (format-command ',command)))
+  `(define-key ,map ,key
+     (format-command
+      ,(if (listp command)
+           ;; if this is the case we want the car to be frozen, but we
+           ;; want the arguments to be evaled
+           `(list (quote ,(car command)) ,@(cdr command))
+           `,command))))
 
-(defmacro defun-key-range (map key-fun command)
+(defmacro defun-key-range (map key-fun command &optional (range '(list:range 1 9)))
   "Acts like defun-key over the keyboard range of 0-9. the key-fun is
 a function which takes the number, while command automatically gets
 fed the argument."
-  `(progn
-     ,@(mapcar (lambda (number)
-                 ;; ugly expansion
-                 `(defun-key ,map (funcall ,key-fun ,number)
-                    ;; have to simulate function application,
-                    ;; it's awkward due to the interface stump takes
-                    ,(if (listp command)
-                         `(,@command ,number)
-                         `(,command ,number))))
-               (list:range 1 9))))
+  (let ((number (gensym)))
+    `(progn
+       (mapcar (lambda (,number)
+                 (defun-key ,map (funcall ,key-fun ,number)
+                   ;; have to simulate function application,
+                   ;; it's awkward due to the interface stump takes
+                   ;; also this is the main reason this is a macro
+                   ,(if (listp command)
+                        `(,@command ,number)
+                        `(,command ,number))))
+             ,range))))
 
 
 (defun kbd-modifier-prefix (prefix)
@@ -104,7 +111,12 @@ to send in."
   frame-switch-by-number)
 
 (defun-key-range *top-map* (kbd-modifier-prefix "F")
-  gselect)
+    gselect
+    (list:range 1 12))
+
+;; rebind because 10 is really 0 for some reaosn
+(defun-key *top-map* (kbd (modifier "F10"))
+  (gselect 0))
 
 (defun-key *top-map* (kbd (modifier "f")) (fullscreen))
 
