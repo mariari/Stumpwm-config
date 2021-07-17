@@ -26,6 +26,13 @@ before running this command."
 
 (start-slynk)
 
+;; not sure if this is needed but I needed this
+;; (init-load-path)
+
+(load-module "stumptray")
+
+(stumptray:stumptray)
+
 (mode-line)
 
 ;; prompt the user for an interactive command. The first arg is an
