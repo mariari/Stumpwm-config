@@ -7,6 +7,11 @@
 (in-package :stump-config.startup)
 
 (run-shell-command "~/.fehbg")
+(run-shell-command "nm-applet")
+(run-shell-command "blueman-applet")
+
+(run-shell-command "mate-volume-control-applet")
+(run-shell-command "fcitx")
 
 ;; (run-shell-command
 ;;  "trayer --edge top --align center --SetDockType true --SetPartialStrut true \

@@ -13,7 +13,7 @@
                (:file "./src/keys" :depends-on ("./src/group"))))
 
 (asdf:defsystem stump-config/startup
-  :depends-on (:stumpwm :misc :stump-config)
+  :depends-on (:stump-config)
   :version "0.0.0.1"
   :maintainer "mariari"
   :author "mariari"

@@ -31,9 +31,9 @@ before running this command."
 
 (load-module "stumptray")
 
-(stumptray:stumptray)
-
 (mode-line)
+
+(stumptray:stumptray)
 
 ;; prompt the user for an interactive command. The first arg is an
 ;; optional initial contents.
@@ -58,8 +58,8 @@ before running this command."
 (make-web-jump "imdb" "firefox http://www.imdb.com/find?q=")
 
 ;; C-t M-s is a terrble binding, but you get the idea.
-(define-key *root-map* (kbd "M-s") "duckduckgo")
-(define-key *root-map* (kbd "i") "imdb")
+;; (define-key *root-map* (kbd "M-s") "duckduckgo")
+;; (define-key *root-map* (kbd "i") "imdb")
 
 ;; Message window font
 (set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
@@ -68,6 +68,9 @@ before running this command."
 
 ;; Clear rules
 (clear-window-placement-rules)
+
+;; Reload default group
+;; (restore-from-file "desktop")
 
 ;; Last rule to match takes precedence!
 ;; TIP: if the argument to :title or :role begins with an ellipsis, a substring

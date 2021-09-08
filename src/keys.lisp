@@ -8,6 +8,12 @@
 (in-package #:stump-config.keys)
 
 ;; ---------------------------------------------------------------
+;;; Custom Groups
+;; ---------------------------------------------------------------
+(defvar *refresh-map* (make-sparse-keymap)
+  "talks about refreshing screen or windows")
+
+;; ---------------------------------------------------------------
 ;;; General Definition Facilities
 ;; ---------------------------------------------------------------
 
@@ -85,6 +91,12 @@ to send in."
 ;; Repacking
 (defun-key *root-map* (kbd "C-f") (repack-frame-numbers))
 (defun-key *root-map* (kbd "C-w") (repack-window-numbers))
+
+;; ---------------------------------------------------------------
+;; Grouping-keys
+;; ---------------------------------------------------------------
+
+(defun-key *top-map* (kbd (modifier "g")) *groups-map*)
 
 ;; ---------------------------------------------------------------
 ;; Group numbering
@@ -192,3 +204,18 @@ to send in."
 ;; Calling menus
 (defun-key *top-map* (kbd (modifier "d")) (exec))
 (defun-key *top-map* (kbd (modifier "n")) (exec "passmenu"))
+
+;; ---------------------------------
+;; Refreshing
+;; ---------------------------------
+
+;; refreshing screen size
+(defun-key *root-map* (kbd "R") (refresh-heads))
+
+(defun-key *top-map* (kbd (modifier "r")) *refresh-map*)
+
+(defun-key *refresh-map* (kbd "r") (refresh-heads))
+
+(defun-key *refresh-map* (kbd "w") (refresh))
+
+(defun-key *refresh-map* (kbd "t") (refresh-time-zone))
