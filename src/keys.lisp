@@ -86,6 +86,9 @@ to send in."
 
 (defun-key *root-map* (kbd "z") stumpwm::*exchange-window-map*)
 
+(defun-key *top-map* (kbd (modifier "RET"))
+  (exec "urxvt"))
+
 (defun-key *root-map* (kbd "C-z") (echo "Z..."))
 
 ;; Repacking
@@ -219,3 +222,14 @@ to send in."
 (defun-key *refresh-map* (kbd "w") (refresh))
 
 (defun-key *refresh-map* (kbd "t") (refresh-time-zone))
+
+
+;; ---------------------------------
+;; Help functionality
+;; ---------------------------------
+
+(defcommand help-top () ()
+  (stumpwm::display-bindings-for-keymaps nil *top-map*))
+
+(defun-key *top-map* (kbd (modifier "?"))
+  (help-top))

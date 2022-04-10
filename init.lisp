@@ -70,7 +70,12 @@ before running this command."
 (clear-window-placement-rules)
 
 ;; Reload default group
-;; (restore-from-file "desktop")
+
+;; (grouplist)
+
+;; (renumber 15 (select-group (current-screen) "Default"))
+(stump-config.groups:grenumber-other 1 15)
+(restore-from-file "desktop")
 
 ;; Last rule to match takes precedence!
 ;; TIP: if the argument to :title or :role begins with an ellipsis, a substring
