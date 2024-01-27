@@ -172,10 +172,10 @@ to send in."
 ;; ---------------------------------
 
 (defun-key *top-map* (kbd "XF86MonBrightnessUp")
-  (exec "xbacklight -steps 1 -time 0 -inc 5"))
+  (exec "brightnessctl s 5%+"))
 
 (defun-key *top-map* (kbd "XF86MonBrightnessDown")
-  (exec "xbacklight -steps 1 -time 0 -dec 5"))
+  (exec "brightnessctl s 5%-"))
 
 (defun-key *top-map* (kbd "XF86AudioMute")
   (exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"))
